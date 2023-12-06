@@ -37,8 +37,16 @@ func main() {
 	router.HandleFunc("/api/products", handlers.GetProducts).Methods("GET")
 	router.HandleFunc("/api/orders", handlers.AddOrder).Methods("POST")
 
+	// Check the number of arguments provided
+	if len(os.Args) > 2 {
+		fmt.Println("Usage: go run . [port]")
+		fmt.Println("Please provide at most one port number.")
+		return
+	}
+
 	port := 8080
-	if len(os.Args) > 1 {
+
+	if len(os.Args) == 2 {
 		argPort := os.Args[1]
 		numPort, err := strconv.Atoi(argPort)
 		if err == nil {

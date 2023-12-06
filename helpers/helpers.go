@@ -5,7 +5,6 @@ import (
 	"github.com/pekaju/solutional/structs"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
 	"strings"
 	"io"
@@ -134,7 +133,6 @@ func AddProductsToOrder(orderIndex int, productIDs []int) {
 			}
 		}
 	}
-	fmt.Println("order after adding: ", structs.Orders[orderIndex])
 }
 
 func CheckPostPatchHeaders(header http.Header) bool {
@@ -143,7 +141,6 @@ func CheckPostPatchHeaders(header http.Header) bool {
 		return false;
 	}
 	if contentLength == "0" {
-		fmt.Printf("Invalid Content-Length: %s. Expected 0.\n", contentLength)
 		return false
 	}
 	contentType := header.Get("Content-Type")
@@ -151,7 +148,6 @@ func CheckPostPatchHeaders(header http.Header) bool {
 		return false;
 	}
 	if contentType != "application/json" && contentType != "application/x-www-form-urlencoded" {
-		fmt.Printf("Invalid Content-Type: %s. Expected application/json.\n", contentType)
 		return false
 	}
 
@@ -159,14 +155,11 @@ func CheckPostPatchHeaders(header http.Header) bool {
 }
 
 func CheckKeyValuePair(data map[string]string) bool {
-	fmt.Println("Map Length: ", len(data))
 	if len(data) == 0 {
 		return false
 	}
-	fmt.Println("Map Info:")
 	//Only check first key/value pair. The rest will be ignored.
 	for key, value := range data {
-		fmt.Printf("Key: %s, Type: %s, Value: %s, Type: %s\n", key, reflect.TypeOf(key), value, reflect.TypeOf(value))
 		if key != "status" || value != "PAID" {
 			return false
 		}else {
@@ -177,13 +170,10 @@ func CheckKeyValuePair(data map[string]string) bool {
 }
 
 func CheckQuantityMap(data map[string]int) bool {
-	fmt.Println("Map Length: ", len(data))
 	if len(data) == 0 {
 		return false
 	}
-	fmt.Println("Map Info:")
 	for key, value := range data {
-		fmt.Printf("Key: %s, Type: %s, Value: %d, Type: %s\n", key, reflect.TypeOf(key), value, reflect.TypeOf(value))
 		if key != "quantity" || value < 0 {
 			return false
 		}else {

@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"log"
 	"github.com/gorilla/mux"
-	"fmt"
 	"strings"
 )
 // POST api/orders
@@ -51,7 +50,6 @@ func decodeProduct(w http.ResponseWriter, r *http.Request) []int{
 	var productIDs []int
 	err := json.NewDecoder(r.Body).Decode(&productIDs)
 	if err != nil {
-		fmt.Println(err)
 		if strings.Contains(err.Error(), "EOF") {
 			BadRequest(w, r)
 			return []int{}
